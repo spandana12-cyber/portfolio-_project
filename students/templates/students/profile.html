@@ -1,0 +1,111 @@
+<h1>{{ profile.user.username }}</h1>
+<p>{{ profile.headline }}</p>
+<p>{{ profile.bio }}</p>
+
+<h3>Skills</h3>
+<ul>
+    {% for skill in profile.skills.all %}
+        <li>{{ skill.name }}</li>
+    {% endfor %}
+</ul>
+
+<h3>Projects</h3>
+<ul>
+    {% for project in profile.projects.all %}
+        <li>
+            <strong>{{ project.title }}</strong><br>
+            {{ project.description }}<br>
+            <a href="{{ project.link }}">View Project</a>
+        </li>
+    {% endfor %}
+</ul>
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="card shadow">
+    <div class="card-body text-center">
+
+        {% if profile.profile_picture %}
+            <img src="{{ profile.profile_picture.url }}" 
+                 class="rounded-circle mb-3" width="150" height="150">
+        {% endif %}
+
+        <h2>{{ profile.user.username }}</h2>
+        <p class="text-muted">{{ profile.headline }}</p>
+        <p>{{ profile.location }}</p>
+
+        <p>{{ profile.bio }}</p>
+
+        <a href="{{ profile.github }}" class="btn btn-dark btn-sm">GitHub</a>
+        <a href="{{ profile.linkedin }}" class="btn btn-primary btn-sm">LinkedIn</a>
+
+    </div>
+</div>
+{% if request.user == profile.user %}
+    <form method="POST" action="{% url 'toggle_privacy' %}">
+        {% csrf_token %}
+        <div class="form-check form-switch mt-3">
+            <input class="form-check-input" 
+                   type="checkbox" 
+                   onchange="this.form.submit()" 
+                   {% if profile.is_public %}checked{% endif %}>
+            <label class="form-check-label">
+                {% if profile.is_public %}
+                    Public Profile
+                {% else %}
+                    Private Profile
+                {% endif %}
+            </label>
+        </div>
+    </form>
+{% endif %}
+
+<br>
+
+<div class="card shadow mb-3">
+    <div class="card-body">
+        <h4>Skills</h4>
+        {% for skill in profile.skills.all %}
+            <span class="badge bg-primary">{{ skill.name }}</span>
+        {% empty %}
+            <p>No skills added.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="card shadow mb-3">
+    <div class="card-body">
+        <h4>Education</h4>
+        {% for edu in profile.educations.all %}
+            <p>
+                <strong>{{ edu.degree }}</strong><br>
+                {{ edu.institution }} ({{ edu.start_year }} - {{ edu.end_year }})
+            </p>
+        {% empty %}
+            <p>No education added.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="card shadow">
+    <div class="card-body">
+        <h4>Projects</h4>
+        {% for project in profile.projects.all %}
+            <p>
+                <strong>{{ project.title }}</strong><br>
+                {{ project.description }}<br>
+                <a href="{{ project.link }}">View Project</a>
+            </p>
+        {% empty %}
+            <p>No projects added.</p>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %} 
+
+{% if profile.is_public %}
+    <span class="badge bg-success">Public</span>
+{% else %}
+    <span class="badge bg-danger">Private</span>
+{% endif %}
