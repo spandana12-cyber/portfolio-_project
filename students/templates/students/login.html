@@ -1,28 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
+{% extends 'students/base.html' %}
 
-<h1>Login Page</h1>
-
-{% if messages %}
-    {% for message in messages %}
-        <p style="color: red;">{{ message }}</p>
-    {% endfor %}
-{% endif %}
-
+{% block content %}
+<h2>Login</h2>
 <form method="POST">
     {% csrf_token %}
-    <label>Username:</label>
-    <input type="text" name="username"><br><br>
-
-    <label>Password:</label>
-    <input type="password" name="password"><br><br>
-
+    <input type="text" name="username" placeholder="Username" required><br><br>
+    <input type="password" name="password" placeholder="Password" required><br><br>
     <button type="submit">Login</button>
 </form>
-
-</body>
-</html>
+<p>Don't have an account? <a href="{% url 'register' %}">Register here</a>.</p>
+{% endblock %}
