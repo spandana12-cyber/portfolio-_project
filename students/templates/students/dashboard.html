@@ -1,16 +1,19 @@
 {% extends 'students/base.html' %}
-
 {% block content %}
-<h2>Dashboard</h2>
-<p>Welcome, {{ user.username }}!</p>
-<p><a href="{% url 'create_portfolio' %}">Create a new portfolio item</a></p>
-
-<h3>Your Portfolios:</h3>
+<h2>Your Portfolio</h2>
+<a href="{% url 'create_portfolio' %}">Add New Project</a>
 <ul>
-    {% for portfolio in user.portfolio_set.all %}
-        <li>{{ portfolio.title }} - {{ portfolio.description }}</li>
+    {% for project in portfolios %}
+        <li>
+            <strong>{{ project.title }}</strong> - {{ project.description }} <br>
+            {% if project.project_link %}
+                <a href="{{ project.project_link }}">Link</a> |
+            {% endif %}
+            <a href="{% url 'update_portfolio' project.pk %}">Edit</a> |
+            <a href="{% url 'delete_portfolio' project.pk %}">Delete</a>
+        </li>
     {% empty %}
-        <li>No portfolios yet.</li>
+        <li>No projects yet. Add one!</li>
     {% endfor %}
 </ul>
 {% endblock %}
