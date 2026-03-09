@@ -1,9 +1,15 @@
-{% extends 'students/base.html' %}
-{% block content %}
-<h2>{% if form.instance.pk %}Update{% else %}Create{% endif %} Project</h2>
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">{% if form.instance.pk %}Update{% else %}Add{% endif %}</button>
+<h2>Add Portfolio Project</h2>
+
+<form method="POST">
+
+{% csrf_token %}
+
+<input type="text" name="title" placeholder="Project Title"><br><br>
+
+<textarea name="description" placeholder="Description"></textarea><br><br>
+
+<input type="url" name="project_link" placeholder="Project Link"><br><br>
+
+<button type="submit">Save</button>
+
 </form>
-{% endblock %}

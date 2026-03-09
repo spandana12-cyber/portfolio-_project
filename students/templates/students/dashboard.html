@@ -1,19 +1,70 @@
-{% extends 'students/base.html' %}
-{% block content %}
-<h2>Your Portfolio</h2>
-<a href="{% url 'create_portfolio' %}">Add New Project</a>
-<ul>
-    {% for project in portfolios %}
-        <li>
-            <strong>{{ project.title }}</strong> - {{ project.description }} <br>
-            {% if project.project_link %}
-                <a href="{{ project.project_link }}">Link</a> |
-            {% endif %}
-            <a href="{% url 'update_portfolio' project.pk %}">Edit</a> |
-            <a href="{% url 'delete_portfolio' project.pk %}">Delete</a>
-        </li>
-    {% empty %}
-        <li>No projects yet. Add one!</li>
-    {% endfor %}
-</ul>
-{% endblock %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Builder Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'dashboard' %}">Portfolio Builder</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="{% url 'dashboard' %}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'add_project' %}">Add Project</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'add_skill' %}">Add Skill</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <h2>Welcome {{ user.username|title }}</h2>
+    <div class="row g-4 mt-3">
+        <!-- Skills Card -->
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">Your Skills</div>
+                <ul class="list-group list-group-flush">
+                    {% if skills %}
+                        {% for skill in skills %}
+                            <li class="list-group-item">{{ skill.name }}</li>
+                        {% endfor %}
+                    {% else %}
+                        <li class="list-group-item">No skills added yet.</li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Projects Card -->
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white">Your Projects</div>
+                <ul class="list-group list-group-flush">
+                    {% if projects %}
+                        {% for project in projects %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                {{ project.title }}
+                                <a href="{% url 'view_project' project.id %}" class="btn btn-sm btn-outline-secondary">View</a>
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        <li class="list-group-item">No projects added yet.</li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="bg-dark text-white text-center py-3 mt-5">© 2026 Portfolio Builder</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

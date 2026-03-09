@@ -1,19 +1,9 @@
-{% extends 'students/base.html' %}
-{% load static %}
-
-{% block content %}
 <h2>Register</h2>
 
-<form method="POST" action="{% url 'register' %}">
+<form method="post">
     {% csrf_token %}
-    <label for="username">Username:</label><br>
-    <input type="text" id="username" name="username" placeholder="Enter username" required><br><br>
-
-    <label for="password">Password:</label><br>
-    <input type="password" id="password" name="password" placeholder="Enter password" required><br><br>
-
+    <input type="text" name="username" placeholder="Username"><br>
+    <input type="email" name="email" placeholder="Email"><br>
+    <input type="password" name="password" placeholder="Password"><br>
     <button type="submit">Register</button>
 </form>
-
-<p>Already have an account? <a href="{% url 'login' %}">Login here</a>.</p>
-{% endblock %}
