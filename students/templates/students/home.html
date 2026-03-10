@@ -1,4 +1,14 @@
-<h1>Student Portfolio System</h1>
+{% extends 'students/base.html' %}
 
-<a href="/login/">Login</a>
-<a href="/register/">Register</a>
+{% block content %}
+
+<div class="hero">
+
+<h1>Build Your Portfolio</h1>
+<p>Create and share your professional portfolio easily.</p>
+
+<a class="btn" href="{% url 'register' %}">Get Started</a>
+
+</div>
+
+{% endblock %}

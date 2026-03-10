@@ -1,0 +1,18 @@
+{% extends 'students/base.html' %}
+
+{% block content %}
+
+<h2>Edit Profile</h2>
+
+<form method="POST">
+{% csrf_token %}
+
+<textarea name="bio" placeholder="Write about yourself">{{ profile.bio }}</textarea>
+
+<br><br>
+
+<button type="submit">Save</button>
+
+</form>
+
+{% endblock %}

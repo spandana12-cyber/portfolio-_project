@@ -4,25 +4,112 @@
 <head>
 <title>Portfolio Builder</title>
 
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<style>
+
+body{
+    background:#1e1e1e;
+    font-family: Arial, Helvetica, sans-serif;
+    margin:0;
+    color:white;
+}
+
+/* Top Header */
+
+.header{
+    background:#3a6f87;
+    padding:15px;
+    text-align:center;
+    font-size:28px;
+    color:#ffd85e;
+}
+
+/* Navigation */
+
+nav{
+    text-align:center;
+    padding:15px;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin:0 15px;
+    font-size:16px;
+}
+
+/* Card Container */
+
+.container{
+    width:450px;
+    margin:60px auto;
+    background:#111;
+    padding:40px;
+    border-radius:8px;
+    box-shadow:0 0 10px rgba(0,0,0,0.6);
+}
+
+/* Inputs */
+
+input, textarea{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    margin-bottom:20px;
+    background:#222;
+    border:1px solid #444;
+    color:white;
+    border-radius:4px;
+}
+
+/* Button */
+
+button{
+    background:#3a6f87;
+    border:none;
+    padding:10px 20px;
+    color:white;
+    cursor:pointer;
+    border-radius:4px;
+}
+
+/* Footer */
+
+footer{
+    text-align:center;
+    margin-top:60px;
+    color:#aaa;
+}
+
+</style>
 
 </head>
 
 <body>
 
-<header class="navbar">
-
-<h2 class="logo">Portfolio Builder</h2>
+<div class="header">
+Portfolio Builder
+</div>
 
 <nav>
+
 <a href="{% url 'home' %}">Home</a>
+
+{% if user.is_authenticated %}
+
 <a href="{% url 'dashboard' %}">Dashboard</a>
 <a href="{% url 'add_project' %}">Add Project</a>
 <a href="{% url 'add_skill' %}">Add Skill</a>
+<a href="{% url 'edit_profile' %}">Edit Profile</a>
 <a href="{% url 'logout' %}">Logout</a>
-</nav>
 
-</header>
+{% else %}
+
+<a href="{% url 'login' %}">Login</a>
+<a href="{% url 'register' %}">Register</a>
+
+{% endif %}
+
+</nav>
 
 <div class="container">
 
@@ -32,7 +119,7 @@
 </div>
 
 <footer>
-<p>© 2026 Portfolio Builder</p>
+© 2026 Portfolio Builder
 </footer>
 
 </body>

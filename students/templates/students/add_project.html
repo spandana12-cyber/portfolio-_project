@@ -25,6 +25,26 @@
         <a href="{% url 'dashboard' %}" class="btn btn-secondary">Back</a>
     </form>
 </div>
+{% extends 'students/base.html' %}
 
+{% block content %}
+
+<h2>Add Project</h2>
+
+<form method="POST">
+
+{% csrf_token %}
+
+<input type="text" name="title" placeholder="Project Title">
+
+<textarea name="description" placeholder="Description"></textarea>
+
+<input type="text" name="link" placeholder="Project Link">
+
+<button type="submit">Add Project</button>
+
+</form>
+
+{% endblock %}
 </body>
 </html>
